@@ -25,5 +25,5 @@ python -m coverage xml
 
 echo '### deactivate virtual environment ###'
 deactivate
-
+echo '### change pyenv to system ###'
 pyenv global system
