@@ -11,7 +11,7 @@ pyenv versions
 pyenv global 3.10.0
 python3 -m venv myenv
 source myenv/bin/activate
-
+echo '#### Checking python ####'
 which python3
 python3 -V
 
