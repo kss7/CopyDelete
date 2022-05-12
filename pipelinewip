@@ -41,10 +41,10 @@ pipeline {
             }
 			post {
                  always {
-                            junit skipMarkingBuildUnstable: true, testResults: 'xmlReport/output.xml' 
+							echo "post stage"
+                           // junit skipMarkingBuildUnstable: true, testResults: 'xmlReport/output.xml' 
                  }
             }
         }
     }
 }
-	
