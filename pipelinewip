@@ -5,6 +5,9 @@ pipeline {
 	    img = "$registry" + ":${env.BUILD_ID}"
         registryCredential = 'docker-hub-login' //withRegistry needs just credentialsId so give like this
     }
+	 options {
+        skipDefaultCheckout()
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -22,7 +25,7 @@ pipeline {
 								docker { image 'python:3.10-slim-buster' }
 							}
                             steps {
-                                echo " Testing Code Coverage"
+                                echo " Testing And Code Coverage"
 								sh 'ls -la'
 								//sh returnStatus: true, script: 'bash ./jenkinsscript.sh'
                             }
@@ -52,7 +55,6 @@ pipeline {
 						 always {
 									echo "Publish Static Analysis"
 									recordIssues enabledForFailure: true, tool: flake8(pattern: '*.text')
-								   // junit skipMarkingBuildUnstable: true, testResults: 'xmlReport/output.xml' 
 						 }
 					}
                 }
@@ -61,3 +63,4 @@ pipeline {
         }
     }
 }
+	
