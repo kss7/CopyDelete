@@ -89,7 +89,7 @@ pipeline {
 			to: "${mailRecipients}",
 			from: "Jenkins",
 			replyTo: "${mailRecipients}",
-			attachLog: true,
+			attachLog: true
 		}
 	}
 }
