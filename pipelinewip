@@ -29,7 +29,7 @@ pipeline {
                             }
 							post {
 								 always {
-											echo "post stage: publish Test Report"
+											echo "PostStage: Publish Test Report"
 											//junit skipMarkingBuildUnstable: true, testResults: 'xmlReport/output.xml' 
 								 }
 							}
@@ -49,14 +49,47 @@ pipeline {
                     }
 					post {
 						 always {
-									echo "Publish Static Analysis"
+									echo "PostStage: Publish Static Analysis"
 									recordIssues enabledForFailure: true, tool: flake8(pattern: '*.text')
 						 }
 					}
                 }
-            }
-			
+            }		
         }
-		
+	stage('Build Img') {
+            steps {
+				script {
+					echo "Build docker image"
+                    println ("${img}")
+                 //   dockerImg = docker.build("${img}")
+                }
+            }
+        }	
+	stage('Release') {
+            steps {
+				script {
+					echo "Push to docker hub"
+                    //docker.withRegistry( 'https://registry.hub.docker.com ', registryCredential )  {
+					//		dockerImg.push()
+					//		dockerImg.push('latest') //one more push for latest tag
+					//	}
+                }
+            }
+        }	
     }
+	post {
+		always {
+			echo "POST stage: Sending Mail"
+			def mailRecipients = "saratksingh@yahoo.com"
+			def jobName = currentBuild.fullDisplayName
+			
+			emailext body: 'Pls go to ${BUILD_URL} and verify!',
+			mimeType: 'text/html',
+			subject: "[Jenkins] ${jobName} - ${currentBuild.currentResult}",
+			to: "${mailRecipients}",
+			from: "Jenkins",
+			replyTo: "${mailRecipients}",
+			attachLog: true,
+		}
+	}
 }
