@@ -6,7 +6,7 @@ pipeline {
         registryCredential = 'docker-hub-login' //withRegistry needs just credentialsId so give like this
     }
 	 options {
-        skipDefaultCheckout()
+        skipDefaultCheckout() //this option will Skip checking out code by default in all agents
     }
     stages {
         stage('Checkout') {
@@ -19,8 +19,6 @@ pipeline {
         stage('Test, Coverage, Static Analyis, Report') {
             parallel {
                 stage('Test & Coverage') {
-                    stages {
-                        stage('Test') {
 							agent {
 								docker { image 'python:3.10-slim-buster' }
 							}
@@ -36,8 +34,6 @@ pipeline {
 								 }
 							}
                         }
-                    }
-                }
                 stage('Static Analyis') {
 					agent {
 								docker { 
@@ -61,6 +57,6 @@ pipeline {
             }
 			
         }
+		
     }
 }
-	
