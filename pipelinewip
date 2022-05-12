@@ -1,0 +1,44 @@
+pipeline {
+    agent { label 'agentlinux'    }
+    stages {
+        stage('Checkout') {
+            steps {
+				echo "Check code is downloaded"
+                //git branch: 'main', url: 'https://github.com/kss7/CopyDelete.git'
+				sh 'ls -la'
+            }
+        }
+        stage('Test, Coverage, Static Analyis, Report') {
+            parallel {
+                stage('Test & Coverage') {
+                    stages {
+                        stage('Test') {
+							agent {
+								docker { image 'python:3.10-slim-buster' }
+							}
+                            steps {
+                                echo " Testing Code Coverage"
+								sh 'ls -la'
+								sh returnStatus: true, script: 'bash ./jenkinsscript.sh'
+                            }
+                        }
+                    }
+                }
+                stage('Static Analyis') {
+					agent {
+								docker { image 'python:3.10-slim-buster' }
+							}
+                    steps {
+                                echo "Static Analysis"
+								sh 'ls -la'
+                    }
+                }
+            }
+			post {
+                 always {
+                            junit skipMarkingBuildUnstable: true, testResults: 'xmlReport/output.xml' 
+                 }
+            }
+        }
+    }
+}
