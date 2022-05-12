@@ -25,6 +25,7 @@ pipeline {
 								 always {
 											junit skipMarkingBuildUnstable: true, testResults: 'xmlReport/output.xml' 
 								 }
+							}
                         }
                     }
                 }
@@ -46,3 +47,4 @@ pipeline {
         }
     }
 }
+	
