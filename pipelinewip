@@ -24,12 +24,12 @@ pipeline {
                             steps {
                                 echo " Testing Code Coverage"
 								sh 'ls -la'
-								sh returnStatus: true, script: 'bash ./jenkinsscript.sh'
+								//sh returnStatus: true, script: 'bash ./jenkinsscript.sh'
                             }
 							post {
 								 always {
 											echo "post stage: publish Test Report"
-											junit skipMarkingBuildUnstable: true, testResults: 'xmlReport/output.xml' 
+											//junit skipMarkingBuildUnstable: true, testResults: 'xmlReport/output.xml' 
 								 }
 							}
                         }
@@ -42,6 +42,7 @@ pipeline {
                     steps {
                                 echo "Static Analysis"
 								sh 'ls -la'
+								sh 'pip install flake8'
 								sh returnStatus: true, script: 'flake8 mail/ utests/ > flake8out.text'
                     }
 					post {
