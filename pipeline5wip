@@ -25,7 +25,6 @@ pipeline {
 								docker { image 'python:3.10-slim-buster' }
 							}
                             steps {
-                                cleanWs()
 																echo " Testing And Code Coverage"
 																sh 'ls -la'
 																sh returnStatus: true, script: 'bash ./jenkinsscript.sh'
@@ -33,7 +32,8 @@ pipeline {
 							post {
 								 always {
 											echo "PostStage: Publish Test Report"
-											//junit skipMarkingBuildUnstable: true, testResults: 'xmlReport/output.xml' 
+											//junit skipMarkingBuildUnstable: true, testResults: 'xmlReport/output.xml'
+											cleanWs()
 								 }
 							}
                         }
@@ -45,7 +45,6 @@ pipeline {
 							}
                     steps {
 													echo "Static Analysis"
-													cleanWs()
 													sh 'who'
 													sh 'ls -la'
 													//sh 'pip install flake8'
@@ -64,7 +63,6 @@ pipeline {
             steps {
 				script {
 								echo "Build docker image"
-								cleanWs()
                  println ("${img}")
                 // dockerImg = docker.build("${img}")
                 }
@@ -84,9 +82,7 @@ pipeline {
     }
 	post {
 		always {
-			cleanWs()
 			echo "POST stage: Sending Mail"
-			
 			emailext body: 'Pls go to ${BUILD_URL} and verify!',
 			mimeType: 'text/html',
 			subject: "[Jenkins] ${jobName} - ${currentBuild.currentResult}",
@@ -94,6 +90,7 @@ pipeline {
 			from: "Jenkins",
 			replyTo: "${mailRecipients}",
 			attachLog: true
+			cleanWs()
 		}
 	}
 }
