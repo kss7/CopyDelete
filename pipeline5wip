@@ -4,12 +4,12 @@ pipeline {
         registry = "kss7/my-smart-app"
 	    img = "$registry" + ":${env.BUILD_ID}"
         registryCredential = 'docker-hub-login' //withRegistry needs just credentialsId so give like this
-		mailRecipients = "saratksingh@yahoo.com, saratkumar.singh@commscope.com, ksaratsingh@gmail.com"
+		mailRecipients = "saratksingh@yahoo.com, saratkumar.singh@commscope.com"
 		jobName = "${currentBuild.fullDisplayName}"
     }
-	 options {
-        skipDefaultCheckout() //this option will Skip checking out code by default in all agents
-    }
+	// options {
+        //skipDefaultCheckout() //this option will Skip checking out code by default in all agents
+    //}
     stages {
         stage('Checkout') {
             steps {
