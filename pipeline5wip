@@ -27,7 +27,7 @@ pipeline {
                             steps {
 																echo " Testing And Code Coverage"
 																sh 'ls -la'
-																sh returnStatus: true, script: 'bash ./jenkinsscript.sh'
+																sh returnStatus: true, script: 'bash ./jenkinsscript5.sh'
                             }
 							post {
 								 always {
@@ -81,7 +81,7 @@ pipeline {
         }	
     }
 	post {
-		always {
+		failure {
 			echo "POST stage: Sending Mail"
 			emailext body: 'Pls go to ${BUILD_URL} and verify!',
 			mimeType: 'text/html',
