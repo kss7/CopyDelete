@@ -47,7 +47,7 @@ pipeline {
 							}
                     steps {
 													echo "Static Analysis"
-													sh 'who'
+													sh 'whoami'
 													sh 'ls -la'
 													//sh 'pip install flake8'
 													sh returnStatus: true, script: 'flake8 main/ utests/ > flake8out.text'
