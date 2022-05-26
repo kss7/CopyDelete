@@ -25,9 +25,10 @@ pipeline {
 								docker { image 'python:3.10-slim-buster' }
 							}
                             steps {
-                                echo " Testing And Code Coverage"
-								sh 'ls -la'
-								//sh returnStatus: true, script: 'bash ./jenkinsscript.sh'
+                                cleanWs()
+																echo " Testing And Code Coverage"
+																sh 'ls -la'
+																sh returnStatus: true, script: 'bash ./jenkinsscript.sh'
                             }
 							post {
 								 always {
@@ -43,10 +44,12 @@ pipeline {
 								}
 							}
                     steps {
-                                echo "Static Analysis"
-								sh 'ls -la'
-								//sh 'pip install flake8'
-								sh returnStatus: true, script: 'flake8 main/ utests/ > flake8out.text'
+													echo "Static Analysis"
+													cleanWs()
+													sh 'who'
+													sh 'ls -la'
+													//sh 'pip install flake8'
+													sh returnStatus: true, script: 'flake8 main/ utests/ > flake8out.text'
                     }
 					post {
 						 always {
@@ -60,9 +63,10 @@ pipeline {
 	stage('Build Img') {
             steps {
 				script {
-					echo "Build docker image"
-                    println ("${img}")
-                 //   dockerImg = docker.build("${img}")
+								echo "Build docker image"
+								cleanWs()
+                 println ("${img}")
+                // dockerImg = docker.build("${img}")
                 }
             }
         }	
@@ -80,6 +84,7 @@ pipeline {
     }
 	post {
 		always {
+			cleanWs()
 			echo "POST stage: Sending Mail"
 			
 			emailext body: 'Pls go to ${BUILD_URL} and verify!',
