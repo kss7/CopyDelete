@@ -28,7 +28,7 @@ pipeline {
 																echo " Testing And Code Coverage"
 																sh 'ls -la'
 																sh 'pwd'
-																sh returnStatus: true, script: 'bash ./jenkinsscript5.sh'
+																sh returnStatus: true, script: 'bash ./jenkinsscipt5.sh'
                             }
 							post {
 								 always {
