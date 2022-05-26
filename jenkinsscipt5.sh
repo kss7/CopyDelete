@@ -7,7 +7,7 @@ which python3
 python3 -V
 
 echo '#### Install requirements ####'
-pip install -r ./requirements.txt
+pip install --no-cache-dir -r ./requirements.txt
 pip install pytest-cov
 
 echo '#### Run tests ####'
