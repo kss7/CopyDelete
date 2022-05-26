@@ -27,6 +27,7 @@ pipeline {
                             steps {
 																echo " Testing And Code Coverage"
 																sh 'ls -la'
+																sh 'pwd'
 																sh returnStatus: true, script: 'bash ./jenkinsscript5.sh'
                             }
 							post {
@@ -48,7 +49,7 @@ pipeline {
 													sh 'who'
 													sh 'ls -la'
 													//sh 'pip install flake8'
-													//sh returnStatus: true, script: 'flake8 main/ utests/ > flake8out.text'
+													sh returnStatus: true, script: 'flake8 main/ utests/ > flake8out.text'
                     }
 					post {
 						 always {
