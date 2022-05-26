@@ -4,7 +4,7 @@ pipeline {
         registry = "kss7/my-smart-app"
 	    img = "$registry" + ":${env.BUILD_ID}"
         registryCredential = 'docker-hub-login' //withRegistry needs just credentialsId so give like this
-		mailRecipients = "saratksingh@yahoo.com"
+		mailRecipients = "saratksingh@yahoo.com, saratkumar.singh@commscope.com, ksaratsingh@gmail.com"
 		jobName = "${currentBuild.fullDisplayName}"
     }
 	 options {
@@ -38,16 +38,15 @@ pipeline {
                         }
                 stage('Static Analyis') {
 					agent {
-								docker { 
-								image 'python:3.10-slim-buster' 
-								args '--user 0:0'
+								dockerfile  { 
+									filename 'Dockerfile_pyagent' 
 								}
 							}
                     steps {
                                 echo "Static Analysis"
 								sh 'ls -la'
-								sh 'pip install flake8'
-								sh returnStatus: true, script: 'flake8 mail/ utests/ > flake8out.text'
+								//sh 'pip install flake8'
+								sh returnStatus: true, script: 'flake8 main/ utests/ > flake8out.text'
                     }
 					post {
 						 always {
