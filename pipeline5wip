@@ -32,8 +32,8 @@ pipeline {
 							post {
 								 always {
 											echo "PostStage: Publish Test Report"
-											//junit skipMarkingBuildUnstable: true, testResults: 'xmlReport/output.xml'
-											cleanWs()
+											junit skipMarkingBuildUnstable: true, testResults: 'xmlReport/output.xml'
+											
 								 }
 							}
                         }
@@ -48,7 +48,7 @@ pipeline {
 													sh 'who'
 													sh 'ls -la'
 													//sh 'pip install flake8'
-													sh returnStatus: true, script: 'flake8 main/ utests/ > flake8out.text'
+													//sh returnStatus: true, script: 'flake8 main/ utests/ > flake8out.text'
                     }
 					post {
 						 always {
@@ -90,6 +90,9 @@ pipeline {
 			from: "Jenkins",
 			replyTo: "${mailRecipients}",
 			attachLog: true
+			
+		}
+		cleanup {
 			cleanWs()
 		}
 	}
