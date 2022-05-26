@@ -34,6 +34,7 @@ pipeline {
 								 always {
 											echo "PostStage: Publish Test Report"
 											junit skipMarkingBuildUnstable: true, testResults: 'xmlReport/output.xml'
+											cleanWs()
 											
 								 }
 							}
@@ -55,6 +56,7 @@ pipeline {
 						 always {
 									echo "PostStage: Publish Static Analysis"
 									recordIssues enabledForFailure: true, tool: flake8(pattern: '*.text')
+									cleanWs()
 						 }
 					}
                 }
