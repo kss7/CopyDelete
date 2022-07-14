@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>My IP</title>
+<title>My IP add</title>
 </head>
 <body>
 		<h3 style="text-align:center">Jenkins CI/CD is AWESOME</h3><br>
