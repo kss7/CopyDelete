@@ -4,7 +4,7 @@ pipeline {
         registry = "kss7/my-smart-app"
 	    img = "$registry" + ":${env.BUILD_ID}"
         registryCredential = 'docker-hub-login' //withRegistry needs just credentialsId so give like this
-		mailRecipients = "saratksingh@yahoo.com"
+		mailRecipients = "test@yahoo.com"
 		jobName = "${currentBuild.fullDisplayName}"
     }
 	// options {
